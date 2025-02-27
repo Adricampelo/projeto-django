@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load icon %}
+{% block 'conteudo' %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div>
+                <div class="col-12">
+                    <div class="card shadow-md rounded-lg">
+                        <div class="card-header d-flex justify-content-between align-items-center  text-white rounded-top-lg"
+                            style="background-color: #0EE785;">
+                            <h4 class="mb-0">Lista de Categorias</h4>
+                            <a class="btn btn-light btn-sm font-weight-bold" href="{% url 'cadastrar_categorias' %}"><i
+                                    class="fas fa-user-plus mr-1"></i>Cadastrar</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped data-table" id="produtos">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Nome da categoria</th>
+                                
+                                            <th class="nosort">Ações</th>
+                                        </tr>
+                                        <tbody>
+                                            {% for categoria in categorias %}
+                                            <tr>
+                                                <td>{{ categoria.nome }}</td>
+                                                <td>
+                                                    <a href="{% url 'editar_categorias' categoria.id %}" class="btn btn-icon btn-sm btn-primary">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                    <a href="{% url 'deletar_categoria' categoria.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Deseja apagar o Categoria?')">                                                    <i class="fas fa-times"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#produtos').DataTable();
+        $('#produtos_filter').css({
+            'display': 'flex',
+            'justify-content': 'flex-end'
+        });
+    });
+</script>
+{% endblock %}

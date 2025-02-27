@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load icon %}
+{% block 'conteudo' %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="col-12">
+                <div class="card shadow-md rounded-lg">
+                    <div class="card-header d-flex justify-content-between align-items-center text-white rounded-top-lg"
+                        style="background-color: #0EE785;">
+                        <h4 class="mb-0">Cadastrar Produto</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST">{% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="codigo" class="font-weight-bold">Código do produto</label>
+                                    {{ form.codigo }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="nome" class="font-weight-bold">Nome do produto</label>
+                                    {{ form.nome }}
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="unidade" class="font-weight-bold">Tipo de unidade</label>
+                                    {{ form.unidade }}
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="status" class="font-weight-bold">Categoria</label>
+                                    {{ form.categoria }}
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="preco" class="font-weight-bold">Preço</label>
+                                    {{ form.preco }}
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="custo" class="font-weight-bold">Custo</label>
+                                    {{ form.custo }}
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="validade" class="font-weight-bold">Validade</label>
+                                    {{ form.validade }}
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="disponivel" class="font-weight-bold">Estoque disponível</label>
+                                    {{ form.estoque }}
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="minimo" class="font-weight-bold">Estoque mínimo</label>
+                                    {{ form.estoque_minimo }}
+                                </div>
+                            </div>
+
+                            <a class="btn btn-dark btn-sm" href="{% url 'produtos' %}">
+                                <i class="fas fa-arrow-left mr-1"></i> Voltar
+                            </a>
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fas fa-save mr-1"></i> Cadastrar
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load icon %}
+{% block 'conteudo' %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div>
+                <div class="col-12">
+                    <div class="card shadow-md rounded-lg">
+                        <div class="card-header d-flex justify-content-between align-items-center text-white rounded-top-lg"
+                             style="background-color: #0EE785;">
+                            <h4 class="mb-0">Lista de Produtos</h4>
+                            <a class="btn btn-light btn-sm font-weight-bold" href="{% url 'cadastrar produtos' %}">
+                                <i class="fas fa-user-plus mr-1"></i>Cadastrar
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped data-table" id="produtos">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Nome do Produto</th>
+                                            <th>Categoria</th>
+                                            <th>Estoque</th>
+                                            <th>Preço</th>
+                                            <th>Código</th>
+                                            <th>Validade</th>
+                                            <th class="nosort">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for produto in produtos %}
+                                        <tr>
+                                            <td>{{ produto.nome }}</td>
+                                            <td>{{ produto.categoria }}</td>
+                                            <td>{{ produto.estoque }}</td>
+                                            <td>R${{ produto.preco }}</td>
+                                            <td>{{ produto.codigo }}</td>
+                                            <td>{{ produto.validade|date:"d/m/Y" }}</td>
+                                            <td>
+                                                <a href="{% url 'editar_produto' produto.id %}" class="btn btn-icon btn-sm btn-primary">
+                                                    <i class="far fa-edit"></i>
+                                                </a>
+                                                
+                                                <a href="{% url 'deletar_produto' produto.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Deseja apagar o Produto?')">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">Nenhum produto cadastrado</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#produtos').DataTable();
+        $('#produtos_filter').css({
+            'display': 'flex',
+            'justify-content': 'flex-end'
+        });
+    });
+</script>
+{% endblock %}

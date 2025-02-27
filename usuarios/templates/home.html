@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load icon %}
+{% block 'conteudo' %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div>
+                <div class="alert alert-success alert-dismissible alert-has-icon" style="background-color: #0EE785">
+                    <div class="alert-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="alert-body">
+                        <div class="alert-title">
+                            Bem-vindo(a)! 😊</div>
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-container-home">
+            <div class="card" style="width: 450px; height: 280px;">
+                <div class="card-header d-block">
+                    <h4>Total de itens cadastrados</h4>
+                </div>
+                <div class="card-body">
+                    <div id="piechart_3d"></div>
+                </div>
+            </div>
+            <div class="card" style="width: 450px; height: 280px;">
+                <div class="card-header d-block">
+                    <h4>Produtos em estoque crítico</h4>
+                </div>
+                <div class="card-body">
+                    <div id="piechart_3d"></div>
+                    
+                </div>
+            </div>
+
+            <div class="card d-block" style="width: 980px; height: 300px;">
+                <div class="card-body">
+                    <div id="barchart" style="width: 950px; height: 250px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<link rel="stylesheet" href="path/to/external.css">
+<script src="path/to/external.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load("current", { packages: ["corechart", "timeline"] });
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+        drawPieChart();
+        drawTimelineChart();
+    }
+
+    function drawPieChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Grupo', 'Número de Dispositivos'],
+            ['Produtos Cadastrados', 45],
+            ['Produtos em estoque crítico', 15],
+           
+        ]);
+
+        var options = {
+            is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+    }
+
+    google.charts.load('current', { packages: ['corechart'] });
+
+    // Quando o Google Charts estiver carregado, chamar a função drawBarChart
+    google.charts.setOnLoadCallback(drawBarChart);
+
+    // Função para desenhar o gráfico
+    function drawBarChart() {
+        // Dados do gráfico
+        var data = google.visualization.arrayToDataTable([
+            ['Mês', 'Número de Vendas'],
+            ['Janeiro', 120],
+            ['Fevereiro', 90],
+            ['Março', 150],
+            ['Abril', 180],
+            ['Maio', 200],
+            ['Junho', 370],
+            ['Julho', 220],
+            ['Agosto', 250],
+            ['Setembro', 210],
+            ['Outubro', 240],
+            ['Novembro', 300],
+            ['Dezembro', 400]
+        ]);
+
+        // Opções de estilo do gráfico
+        var options = {
+            title: 'Número de Vendas por Mês',
+            hAxis: { title: 'Mês' },
+            vAxis: { title: 'Número de Vendas' },
+            legend: 'none',
+            colors: ['#4caf50'] // Cor personalizada para as barras
+        };
+
+        // Criar e desenhar o gráfico na div com id="barchart"
+        var chart = new google.visualization.ColumnChart(document.getElementById('barchart'));
+        chart.draw(data, options);
+    }
+
+    $(document).ready(function () {
+        console.log(document)
+        $('.toggle-btn').click(function () {
+            var $btn = $(this);
+            var isOn = $btn.hasClass('btn-success');
+            var newStatus = isOn ? 'OFF' : 'ON';
+
+            // Para modo invertido
+            var StatusInvert = isOn ? 'ON' : 'OFF';
+            var topico = $btn.attr('id');
+
+            $.ajax({
+                url: '',
+                method: 'POST',
+                data: {
+                    _token: '',
+                    mensagem: StatusInvert,
+                    topicos: [topico]
+                },
+                success: function (response) {
+                    console.log('Resposta do servidor:', response);
+                    $btn.toggleClass('btn-success btn-danger').text(newStatus);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Erro ao enviar solicitação:', error);
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .card-container-home {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+</style>
+
+{% endblock %}

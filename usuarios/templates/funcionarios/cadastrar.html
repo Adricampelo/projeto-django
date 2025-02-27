@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load icon %}
+{% block 'conteudo' %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="col-12">
+                <div class="card shadow-md rounded-lg">
+                    {% if messages %}
+                    <div class="alert alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                    <div class="card-header d-flex justify-content-between align-items-center text-white rounded-top-lg"
+                        style="background-color: #0EE785;">
+                        <h4 class="mb-0">Cadastrar Usuário</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="">{% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="nome" class="font-weight-bold">Nome</label>
+                                    {{ form.nome }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="email" class="font-weight-bold">Email</label>
+                                    {{ form.email }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="password" class="font-weight-bold">Senha</label>
+                                    {{ form.password }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="contato" class="font-weight-bold">Celular</label>
+                                    {{ form.contato }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="endereco" class="font-weight-bold">Endereço</label>
+                                    {{ form.endereco }}
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="cpf" class="font-weight-bold">CPF</label>
+                                    {{ form.cpf }}
+                                </div>
+                            </div>
+
+                            <a class="btn btn-dark btn-sm" href="{% url 'funcionario' %}">
+                                <i class="fas fa-arrow-left mr-1"></i> Voltar
+                            </a>
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fas fa-save mr-1"></i> Cadastrar
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

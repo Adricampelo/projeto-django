@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load icon %}
+{% block 'conteudo' %}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div>
+                <div class="col-12">
+                    <div class="card shadow-md rounded-lg">
+                        <div class="card-header d-flex justify-content-between align-items-center  text-white rounded-top-lg"
+                            style="background-color: #0EE785;">
+                            <h4 class="mb-0">Lista de Usuários</h4>
+                            <a class="btn btn-light btn-sm font-weight-bold" href="{% url 'cadastrar_funcionario' %}"><i
+                                    class="fas fa-user-plus mr-1"></i>Cadastrar</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped data-table" id="usuarios">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Email</th>
+                                            <th>Celular</th>
+                                            <th>Status</th>
+                                            <th class="nosort">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for usuario in usuarios %}
+                                        <tr>
+                                            <td>{{ usuario.nome }}</td>
+                                            <td>{{ usuario.email }}</td>
+                                            <td>{{ usuario.contato }}</td>
+                                            <td>
+                                                <span class="badge badge-success">Ativo</span>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'editar_funcionario' usuario.id %}" class="btn btn-icon btn-sm btn-primary">
+                                                    <i class="far fa-edit"></i>
+                                                </a>
+                                                <a href="{% url 'deletar_funcionario' usuario.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Deseja apagar o Usuário?')">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="5" class="text-center">Nenhum usuário cadastrado</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#usuarios').DataTable();
+        $('#usuarios_filter').css({
+            'display': 'flex',
+            'justify-content': 'flex-end'
+        });
+    });
+</script>
+{% endblock %}
